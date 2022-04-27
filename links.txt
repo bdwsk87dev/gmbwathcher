@@ -1,0 +1,31 @@
+https://www.npmjs.com/package/@googleapis/mybusinessaccountmanagement
+https://googleapis.dev/nodejs/googleapis/latest/mybusinessaccountmanagement/classes/Resource$Locations.html
+https://github.com/googleapis/google-api-nodejs-client/tree/main/src/apis/mybusinessaccountmanagement
+https://googleapis.dev/nodejs/googleapis/latest/mybusinessaccountmanagement/classes/Mybusinessaccountmanagement.html
+
+list of the accounts source code
+https://googleapis.dev/nodejs/googleapis/latest/mybusinessaccountmanagement/classes/Resource$Accounts.html#list
+https://developers.google.com/my-business/reference/accountmanagement/rest/v1/accounts.admins/list
+
+auth helper
+
+https://serveanswer.com/questions/google-api-no-access-refresh-token-api-key-or-refresh-handler-callback-is-set
+
+
+https://stackoverflow.com/questions/70862741/google-api-no-access-refresh-token-api-key-or-refresh-handler-callback-is-set
+
+###########
+
+First, you would want to know which process is using port 3000
+
+sudo lsof -i :3000
+this will list all PID listening on this port, once you have the PID you can terminate it with the following:
+
+kill -9 {PID}
+
+
+
+
+#new
+
+https://googleapis.dev/nodejs/googleapis/latest/mybusinessbusinessinformation/classes/Resource$Accounts$Locations.html#list
