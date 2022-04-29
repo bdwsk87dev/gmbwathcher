@@ -30,9 +30,17 @@ export class gmbController {
 
     async gedAdminList(oAuth2Client){
 
-        // 1
-        google.options({auth: oAuth2Client});
-        // Acquire an auth client, and bind it to all future calls
+
+        // // 1
+        // google.options({auth: oAuth2Client});
+        // // Acquire an auth client, and bind it to all future calls
+        // const mybusinessbusinessinformation1 = google.mybusinessaccountmanagement('v1');
+        // const response = await mybusinessbusinessinformation1.accounts.list({
+        // });
+        // console.log(response.data);
+        // return 1
+
+
         const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
         const ress = await mybusinessaccountmanagement.accounts.list({
         });
