@@ -29,3 +29,6 @@ kill -9 {PID}
 #new
 
 https://googleapis.dev/nodejs/googleapis/latest/mybusinessbusinessinformation/classes/Resource$Accounts$Locations.html#list
+
+
+curl -X POST http://localhost:3000/auth/login -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"
