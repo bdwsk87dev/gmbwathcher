@@ -1,11 +1,11 @@
 import { Controller, Request, Get, Post, UseGuards } from "@nestjs/common";
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
-import { LocalAuthGuard } from './auth/local-auth.guard';
+import { LocalAuthGuard } from './auth/local-auth.guard'
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Controller()
 export class appController{
-
     constructor(private authService: AuthService) {}
 
     @UseGuards(LocalAuthGuard)
@@ -14,9 +14,9 @@ export class appController{
         return this.authService.login(req.user);
     }
 
-    // @UseGuards(AuthGuard('local'))
-    // @Get('auth/test')
-    // getUsers(){
-    //     return [{id:1111, name: 'Hello2'}]
-    // }
+    @UseGuards(JwtAuthGuard)
+    @Get('profile')
+    getProfile(@Request() req) {
+        return req.user;
+    }
 }
