@@ -14,9 +14,9 @@ export class appController{
         return this.authService.login(req.user);
     }
 
-    @UseGuards(AuthGuard('local'))
-    @Get('auth/test')
-    getUsers(){
-        return [{id:1111, name: 'Hello2'}]
-    }
+    // @UseGuards(AuthGuard('local'))
+    // @Get('auth/test')
+    // getUsers(){
+    //     return [{id:1111, name: 'Hello2'}]
+    // }
 }
