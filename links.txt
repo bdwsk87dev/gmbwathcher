@@ -32,3 +32,18 @@ https://googleapis.dev/nodejs/googleapis/latest/mybusinessbusinessinformation/cl
 
 
 curl -X POST http://localhost:3000/auth/login -d '{"username": "john", "password": "changeme"}' -H "Content-Type: application/json"
+
+
+
+
+Setup database
+1
+npm install --save @nestjs/sequelize sequelize sequelize-typescript
+2
+npm install --save pg pg-hstore
+3
+npm install --save-dev @types/sequelize
+
+
+Links:
+https://habr.com/ru/post/514380/
