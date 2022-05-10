@@ -6,6 +6,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { GmbModule } from './gmb/gmb.module';
 import { ConfigModule } from '@nestjs/config'
 import { User } from './users/users.model'
+import { CronModule } from './cron/cron.module';
 
 @Module({
     controllers:[appController],
@@ -23,7 +24,7 @@ import { User } from './users/users.model'
         database: process.env.POSTGRES_DB,
         models: [User],
         autoLoadModels: true
-    }), AuthModule, UsersModule, GmbModule]
+    }), AuthModule, UsersModule, GmbModule, CronModule]
 
 })
 export class AppModule{}
