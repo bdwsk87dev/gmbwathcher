@@ -5,7 +5,10 @@ import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function start(){
-    const PORT = process.env.PORT || 5000;
+
+    console.log(process.env.PORT)
+
+    const PORT = process.env.PORT || 3000;
     const app = await NestFactory.create<NestExpressApplication>(AppModule)
 
     app.useStaticAssets(join(__dirname, '..', 'public'));

@@ -4,10 +4,34 @@
   <title>App</title>
 </head>
 <body>
-{{ message }}
-<form>
-  <input type="text" value="login">
-  <input type="text" value="password">
-</form>
+
+<div id="app">
+
+  {{ message }}
+  <form>
+    <input type="text" value="login">
+    <input type="text" value="password">
+    11 {{ sss }} 11
+  </form>
+
+  </div>
+
+
 </body>
 </html>
+
+<script type="module">
+
+  import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.esm.browser.js'
+
+  new Vue({
+    el: '#app',
+    data: {
+      sss: 'Hello Vues.js!'
+    },
+    mounted() {
+      console.log(111111111111111111);
+    },
+  });
+
+</script>

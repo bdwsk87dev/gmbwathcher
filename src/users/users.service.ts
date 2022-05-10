@@ -22,4 +22,6 @@ export class UsersService {
   }
 }
 
+
+
 // curl http://localhost:5000/profile -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsZXgiLCJzdWIiOjEsImlhdCI6MTY1MTcxMzI4OCwiZXhwIjoxNjUxNzEzMzQ4fQ.C0GqZLhuzGW2TouE4poiFKf0ZC1GpoOxpGGlidmoUJc"

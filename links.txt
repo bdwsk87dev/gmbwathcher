@@ -47,3 +47,12 @@ npm install --save-dev @types/sequelize
 
 Links:
 https://habr.com/ru/post/514380/
+
+
+http://localhost:5000/auth/login?username=alex&password=15616
+
+
+!!!
+https://www.codemag.com/Article/2005051/NestJS-Step-by-Step-Connecting-NestJS-with-Angular-Part-4
+
+

@@ -1,4 +1,4 @@
-import {Controller, Get} from "@nestjs/common";
+import {Controller, Get, Res, HttpStatus} from "@nestjs/common";
 
 const fs = require('fs');
 const { dirname } = require('path');
@@ -16,12 +16,12 @@ const scopes = [
   'https://www.googleapis.com/auth/cloud-platform'
 ];
 
-
 @Controller('/gmb')
 export class gmbController {
 
   @Get('/accountList')
   async accountList(){
+
     const readfile = fs.readFile('./conf/credentials.json', (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
       this.authorize(JSON.parse(content), this.gedAdminList);
@@ -35,14 +35,16 @@ export class gmbController {
     const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
     const ress = await mybusinessaccountmanagement.accounts.list({
     });
+
     console.log(ress.data);
 
     // 2
     const accountId = ress.data.accounts[0].name
     //const accountId = 'accounts/101379913627256269047'
     const mybusinessbusinessinformation = google.mybusinessbusinessinformation('v1');
+    // TODO APIKEY!!!!
     const apiKey = "AIzaSyDl4INBe0C2FQSMcR9J-BsgPH-3_DeBGxg";
-    const res = await mybusinessbusinessinformation.accounts.locations.list({
+    const result = await mybusinessbusinessinformation.accounts.locations.list({
       // Required. The name of the account to fetch locations from. If the parent Account is of AccountType PERSONAL, only Locations that are directly owned by the Account are returned, otherwise it will return all accessible locations from the Account, either directly or indirectly.
       parent: accountId,
       // Required. Read mask to specify what fields will be returned in the response.
@@ -50,8 +52,7 @@ export class gmbController {
       pageSize: '2',
       key: apiKey,
     });
-    return res.data
-    console.log(res.data);
+    console.log(result.data);
   }
 
   @Get('/authurl')
@@ -99,7 +100,7 @@ export class gmbController {
     console.log(ress.data);
   }
 
-  authorize(credentials, callback) {
+  async authorize(credentials, callback) {
     const {client_secret, client_id, redirect_uris} = credentials.web;
     const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
@@ -107,7 +108,7 @@ export class gmbController {
     fs.readFile('./conf/token.json', (err, token) => {
       if (err) return this.getNewToken(oAuth2Client, callback);
       oAuth2Client.setCredentials(JSON.parse(token));
-      callback(oAuth2Client);
+      return callback(oAuth2Client);
     });
   }
 
