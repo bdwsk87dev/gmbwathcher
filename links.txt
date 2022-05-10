@@ -56,3 +56,6 @@ http://localhost:5000/auth/login?username=alex&password=15616
 https://www.codemag.com/Article/2005051/NestJS-Step-by-Step-Connecting-NestJS-with-Angular-Part-4
 
 
+
+
+// curl http://localhost:5000/profile -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsZXgiLCJzdWIiOjEsImlhdCI6MTY1MTcxMzI4OCwiZXhwIjoxNjUxNzEzMzQ4fQ.C0GqZLhuzGW2TouE4poiFKf0ZC1GpoOxpGGlidmoUJc"

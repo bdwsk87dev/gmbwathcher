@@ -1,27 +1,47 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from "@nestjs/sequelize";
+import { User } from "./users.model";
+import { CreateUserDto } from "./dto/create-user.dto";
 
-export type User = any;
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'alex',
-      password: '15616',
-    },
-    {
-      userId: 2,
-      username: 'something',
-      password: '789858',
-    },
-  ];
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+  constructor(@InjectModel(User) private userRepository: typeof User) {
+
   }
+
+  async createUser(dto: CreateUserDto) {
+    const user = await this.userRepository.create(dto);
+    return user;
+  }
+
+  async getAllUsers(){
+    const users = await this.userRepository.findAll();
+    return users;
+  }
+
+  async findOne(username: string) {
+    const user = await this.userRepository.findOne ({where:{username}})
+    return user;
+  }
+
+  //
+  // private readonly users = [
+  //   {
+  //     userId: 1,
+  //     username: 'alex',
+  //     password: '15616',
+  //   },
+  //   {
+  //     userId: 2,
+  //     username: 'something',
+  //     password: '789858',
+  //   },
+  // ];
+
+  // async findOne(username: string): Promise<User | undefined> {
+  //   return this.users.find(user => user.username === username);
+  // }
 }
 
-
-
-// curl http://localhost:5000/profile -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFsZXgiLCJzdWIiOjEsImlhdCI6MTY1MTcxMzI4OCwiZXhwIjoxNjUxNzEzMzQ4fQ.C0GqZLhuzGW2TouE4poiFKf0ZC1GpoOxpGGlidmoUJc"
