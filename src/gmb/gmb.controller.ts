@@ -16,54 +16,83 @@ const scopes = [
   'https://www.googleapis.com/auth/cloud-platform'
 ];
 
+
 @Controller('/gmb')
 export class gmbController {
 
-  @Get('/accountList')
-  async accountList(){
-
+  @Get('/start')
+  async start(){
+    // Prepare credentials
     const readfile = fs.readFile('./conf/credentials.json', (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
-      this.authorize(JSON.parse(content), this.gedAdminList);
+      this.authorize(JSON.parse(content), this.getLocations);
     });
   }
 
-  async gedAdminList(oAuth2Client){
+  async getLocations(oAuth2Client){
 
-    // 1
+    // Setup
     google.options({auth: oAuth2Client});
-    const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
-    const ress = await mybusinessaccountmanagement.accounts.list({
-    });
 
-    console.log(ress.data);
+          //const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
+          //const ress = await mybusinessaccountmanagement.accounts.list({
+          //});
+          //console.log(ress.data);
 
-    // 2
-    const accountId = ress.data.accounts[0].name
-    //const accountId = 'accounts/101379913627256269047'
+          // Get locations list
+          // const accountId = ress.data.accounts[2].name
+
+    // Hardcode location ID
+    let accountId = 'accounts/112414412945354813426'
+    // Setup
     const mybusinessbusinessinformation = google.mybusinessbusinessinformation('v1');
-    // TODO APIKEY!!!!
-    const apiKey = "AIzaSyDl4INBe0C2FQSMcR9J-BsgPH-3_DeBGxg";
+    // Get api key from env
+    const apiKey = process.env.API_KEY;
+    // Get locations
     const result = await mybusinessbusinessinformation.accounts.locations.list({
-      // Required. The name of the account to fetch locations from. If the parent Account is of AccountType PERSONAL, only Locations that are directly owned by the Account are returned, otherwise it will return all accessible locations from the Account, either directly or indirectly.
       parent: accountId,
-      // Required. Read mask to specify what fields will be returned in the response.
-      readMask: 'name',
+      readMask: 'name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems',
       pageSize: '2',
       key: apiKey,
     });
-    console.log(result.data);
+
+    // Foreach result
+    let locations = result.data['locations'];
+
+
+    for (var key in locations) {
+      console.log('key => ' + key)
+
+      // Data
+      let name = locations[key]['name'];
+      let languageCode = locations[key]['languageCode'];
+      let storeCode = locations[key]['storeCode'];
+      let title = locations[key]['title'];
+      let primaryPhone = locations[key]['phoneNumbers']['primaryPhone'];
+      let additionalPhones = locations[key]['phoneNumbers']['additionalPhones'].join(',');
+      let regionCode = locations[key]['storefrontAddress']['regionCode'];
+      let administrativeArea = locations[key]['storefrontAddress']['administrativeArea'];
+      let postalCode = locations[key]['storefrontAddress']['postalCode'];
+      let locality = locations[key]['storefrontAddress']['locality'];
+      let addressLines = locations[key]['storefrontAddress']['addressLines'].join(',');
+      let websiteUri = locations[key]['websiteUrl'];
+      let latlng = locations[key]['latlng'];
+      let mapsUri = locations[key]['metadata']['mapsUri'];
+
+
+
+    }
+
+    // console.log(result.data[0].storefrontAddress);
   }
 
   @Get('/authurl')
   async authurl(){
-
     const oauth2Client = new google.auth.OAuth2(
       '348647607684-b0fspa0gcd7a5falk1ipkpcbnnvl0e8f.apps.googleusercontent.com',
       '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',
       'http://localhost:5000/gmb/locations',
     );
-
     const url = oauth2Client.generateAuthUrl({
       // 'online' (default) or 'offline' (gets refresh_token)
       access_type: 'offline',
@@ -72,32 +101,6 @@ export class gmbController {
     });
     console.log(url);
     return url;
-  }
-
-  @Get('/auth')
-  async auth(){
-    // Load client secrets from a local file.
-    fs.readFile('./conf/credentials.json', (err, content) => {
-      if (err) return console.log('Error loading client secret file:', err);
-      // Authorize a client with credentials, then call the Google Tasks API.
-      this.authorize(JSON.parse(content), this.listConnectionNames);
-    });
-  }
-
-  async listConnectionNames(oAuth2Client) {
-    const auth = new google.auth.GoogleAuth({
-      // Scopes can be specified either as an array or as a single, space-delimited string.
-      scopes: scopes,
-    });
-    // Acquire an auth client, and bind it to all future calls
-    const authClient = await auth.getClient();
-    google.options({auth: authClient});
-    const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
-    const ress = await mybusinessaccountmanagement.accounts.list({
-
-    });
-
-    console.log(ress.data);
   }
 
   async authorize(credentials, callback) {
@@ -137,3 +140,66 @@ export class gmbController {
     });
   }
 }
+
+//
+// @Get('/accountList')
+// async accountList(){
+//   const readfile = fs.readFile('./conf/credentials.json', (err, content) => {
+//     if (err) return console.log('Error loading client secret file:', err);
+//     this.authorize(JSON.parse(content), this.gedAdminList);
+//   });
+// }
+//
+// async gedAdminList(oAuth2Client){
+//
+//   // 1
+//   google.options({auth: oAuth2Client});
+//   const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
+//   const ress = await mybusinessaccountmanagement.accounts.list({
+//   });
+//
+//   console.log(ress.data);
+//
+//   // 2
+//   const accountId = ress.data.accounts[0].name
+//   //const accountId = 'accounts/101379913627256269047'
+//   const mybusinessbusinessinformation = google.mybusinessbusinessinformation('v1');
+//
+//   const apiKey = "AIzaSyDl4INBe0C2FQSMcR9J-BsgPH-3_DeBGxg";
+//   const result = await mybusinessbusinessinformation.accounts.locations.list({
+//     // Required. The name of the account to fetch locations from. If the parent Account is of AccountType PERSONAL, only Locations that are directly owned by the Account are returned, otherwise it will return all accessible locations from the Account, either directly or indirectly.
+//     parent: accountId,
+//     // Required. Read mask to specify what fields will be returned in the response.
+//     readMask: 'name',
+//     pageSize: '2',
+//     key: apiKey,
+//   });
+//   console.log(result.data);
+// }
+
+
+
+// async listConnectionNames(oAuth2Client) {
+//   const auth = new google.auth.GoogleAuth({
+//     // Scopes can be specified either as an array or as a single, space-delimited string.
+//     scopes: scopes,
+//   });
+//   // Acquire an auth client, and bind it to all future calls
+//   const authClient = await auth.getClient();
+//   google.options({auth: authClient});
+//   const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
+//   const ress = await mybusinessaccountmanagement.accounts.list({
+//   });
+//   console.log(ress.data);
+// }
+
+//
+// @Get('/auth')
+// async auth(){
+//   // Load client secrets from a local file.
+//   fs.readFile('./conf/credentials.json', (err, content) => {
+//     if (err) return console.log('Error loading client secret file:', err);
+//     // Authorize a client with credentials, then call the Google Tasks API.
+//     this.authorize(JSON.parse(content), this.listConnectionNames);
+//   });
+// }
