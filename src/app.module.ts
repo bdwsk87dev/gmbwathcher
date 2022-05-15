@@ -11,6 +11,7 @@ import { LocationsModule } from './locations/locations.module';
 import { Location } from "./locations/locations.model";
 import { GmbAccount } from "./gmbaccounts/gmbaccounts.model";
 
+
 @Module({
     controllers:[appController],
 

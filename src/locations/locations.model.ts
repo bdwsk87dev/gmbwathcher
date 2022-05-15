@@ -1,6 +1,7 @@
 import { Model, Table, DataType, Column } from "sequelize-typescript";
 
 interface LocationCreationAttrs {
+  name:string;
   gmbaccountId: number;
   languageCode: string;
   storeCode: string;
@@ -23,6 +24,8 @@ export class Location extends Model<Location> {
   id: number;
   @Column({type: DataType.INTEGER})
   gmbaccountId: number;
+  @Column({type: DataType.STRING})
+  name: string;
   @Column({type: DataType.STRING})
   languageCode: string;
   @Column({type: DataType.STRING})

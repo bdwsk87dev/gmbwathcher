@@ -8,15 +8,12 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 export class appController{
     constructor(private authService: AuthService) {}
 
-    // Login, get local user token
-
     @Get()
     @Render('index')
     root() {
         return { message: 'Hello world!' };
     }
 
-    // No auth
     @UseGuards(LocalAuthGuard)
     @Post('auth/login')
     async login(@Request() req) {
@@ -24,10 +21,9 @@ export class appController{
         return this.authService.login(req.user);
     }
 
-    // Already auth
     @UseGuards(JwtAuthGuard)
     @Get('profile')
     getProfile(@Request() req) {
-        return req.user;
+        return 1;
     }
 }

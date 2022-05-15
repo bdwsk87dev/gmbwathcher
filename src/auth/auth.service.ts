@@ -4,13 +4,6 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { ConfigModule } from '@nestjs/config'
 
-getPass()
-async function getPass(){
-  const hash = await bcrypt.hash('1561615616', 5)
-  console.log(hash)
-  return hash
-}
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -20,8 +13,8 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
-    pass = await bcrypt.hash(pass, 5)
-    if (user && user.password === pass) {
+    const passwordEquals = await bcrypt.compare(pass, user.password);
+    if (user && passwordEquals) {
       const { password, ...result } = user;
       return result;
     }
