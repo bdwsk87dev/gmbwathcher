@@ -17,13 +17,12 @@ export class appController{
     @UseGuards(LocalAuthGuard)
     @Post('auth/login')
     async login(@Request() req) {
-        console.log(req)
         return this.authService.login(req.user);
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get('profile')
+    @Get('auth/current-user')
     getProfile(@Request() req) {
-        return 1;
+        return req.user;
     }
 }

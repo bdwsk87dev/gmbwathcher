@@ -1,4 +1,5 @@
-import { Model, Table, DataType, Column } from "sequelize-typescript";
+import { Model, Table, DataType, Column, BelongsTo, HasMany } from "sequelize-typescript";
+import { Change } from "../changes/changes.model";
 
 interface LocationCreationAttrs {
   name:string;
@@ -19,7 +20,7 @@ interface LocationCreationAttrs {
 }
 
 @Table({ tableName: "locations" })
-export class Location extends Model<Location> {
+export class Location extends Model<Location, LocationCreationAttrs> {
   @Column({type: DataType.INTEGER, unique: true, autoIncrement:true, primaryKey: true})
   id: number;
   @Column({type: DataType.INTEGER})
@@ -52,4 +53,7 @@ export class Location extends Model<Location> {
   latlng: string;
   @Column({type: DataType.STRING})
   mapsUri: string;
+
+  @HasMany(()=>Change)
+  changes: Change[]
 }

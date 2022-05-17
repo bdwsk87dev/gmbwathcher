@@ -10,11 +10,11 @@ import { GmbaccountsModule } from './gmbaccounts/gmbaccounts.module';
 import { LocationsModule } from './locations/locations.module';
 import { Location } from "./locations/locations.model";
 import { GmbAccount } from "./gmbaccounts/gmbaccounts.model";
-
+import { ChangesModule } from './changes/changes.module';
+import { Change } from "./changes/changes.model";
 
 @Module({
     controllers:[appController],
-
     imports: [
       ConfigModule.forRoot({
           envFilePath: `.${process.env.NODE_ENV}.env`
@@ -26,9 +26,9 @@ import { GmbAccount } from "./gmbaccounts/gmbaccounts.model";
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DB,
-        models: [User, Location, GmbAccount],
+        models: [User, Location, GmbAccount, Change],
         autoLoadModels: true
-    }), AuthModule, UsersModule, GmbModule, GmbaccountsModule, LocationsModule]
+    }), AuthModule, UsersModule, GmbModule, GmbaccountsModule, LocationsModule, ChangesModule]
 
 })
 export class AppModule{}

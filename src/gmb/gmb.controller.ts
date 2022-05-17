@@ -1,17 +1,13 @@
 import { Controller, Get, Res, HttpStatus } from "@nestjs/common";
 import { LocationsService } from "../locations/locations.service";
 import { CreateLocationDto } from "../locations/dto/create-location.dto";
-
 const fs = require("fs");
 const { dirname } = require("path");
 const appDir = dirname(require.main.filename);
-
 const readline = require("readline");
 const { google } = require("googleapis");
-
 const TOKEN_PATH = appDir + "/../../conf/token.json";
 const CREDENTIALS_FILE = appDir + "/../../conf/credentials.json";
-
 
 // Scopes
 const scopes = [
@@ -19,38 +15,14 @@ const scopes = [
   "https://www.googleapis.com/auth/cloud-platform"
 ];
 
-
 @Controller("/gmb")
 export class gmbController {
 
   constructor(private locationService: LocationsService) {
   }
 
-
   @Get("/start")
   async start() {
-
-
-    // let locationDto = {
-    //   'name': 'no name22',
-    //   'gmbaccountId': 1,
-    //   'languageCode':'no language code',
-    //   'storeCode':'no store code',
-    //   'title': 'no title',
-    //   'primaryPhone': 'no primary phone',
-    //   'additionalPhones':'no additional phones',
-    //   'regionCode':'no region code',
-    //   'administrativeArea': 'no administrative area',
-    //   'postalCode': 'no postal code',
-    //   'locality': 'no locality',
-    //   'addressLines' :'no address lines',
-    //   'websiteUri' :'no website url',
-    //   'latlng':'no latlng',
-    //   'mapsUri':'no maps uri'
-    // };
-    // this.locationService.getLocationByNameAndUpdate('no name',locationDto);
-    //
-    // return 1;
 
 
     // Prepare credentials
@@ -61,9 +33,6 @@ export class gmbController {
   }
 
   async getLocations(oAuth2Client, locationService) {
-
-
-    // Setup
     google.options({ auth: oAuth2Client });
 
     //const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
@@ -115,7 +84,7 @@ export class gmbController {
           if (location === null) {
             locationService.createLocation(locationDto);
           } else {
-            this.locationService.getLocationByNameAndUpdate("no name", locationDto);
+            this.locationService.getLocationByNameAndUpdate(locations[key]["name"], locationDto);
           }
           console.log(location);
         }
