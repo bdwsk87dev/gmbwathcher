@@ -11,7 +11,7 @@ export class appController{
     @Get()
     @Render('index')
     root() {
-        return { message: 'Hello world!' };
+        return { message: 'Сервер працює...' };
     }
 
     @UseGuards(LocalAuthGuard)

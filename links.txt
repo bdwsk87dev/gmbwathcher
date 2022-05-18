@@ -1,3 +1,16 @@
+ng serve --open
+
+Get folders
+//const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
+//const ress = await mybusinessaccountmanagement.accounts.list({
+//});
+//console.log(ress.data);
+
+// Get locations list
+// const accountId = ress.data.accounts[2].name
+
+
+
 sudo lsof -i :5000
 kill -9 6807
 
@@ -100,3 +113,40 @@ https://github.com/IraErshova/angular-authorization
     // this.locationService.getLocationByNameAndUpdate('no name',locationDto);
     //
     // return 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+    async getLocations(oAuth2Client, locationService) {
+        google.options({ auth: oAuth2Client });
+
+        //const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');
+        //const ress = await mybusinessaccountmanagement.accounts.list({
+        //});
+        //console.log(ress.data);
+
+        // Get locations list
+        // const accountId = ress.data.accounts[2].name
+
+        // Hardcode location ID
+        let accountId = "accounts/112414412945354813426";
+        // Setup
+        const mybusinessbusinessinformation = google.mybusinessbusinessinformation("v1");
+        // Get api key from env
+        const apiKey = process.env.API_KEY;
+        // Get locations
+        const result = await mybusinessbusinessinformation.accounts.locations.list({
+          parent: accountId,
+          readMask: "name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems",
+          pageSize: "2",
+          key: apiKey
+        });

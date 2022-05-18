@@ -1,0 +1,39 @@
+<div class="container mt-5">
+
+  <h3>Локації</h3>
+  <table class="table">
+    <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Назва</th>
+      <th scope="col">Телефон</th>
+      <th scope="col">Інші телефони</th>
+      <th scope="col">Область</th>
+      <th scope="col">Індекс</th>
+      <th scope="col">Місто</th>
+      <th scope="col">Адреса</th>
+      <th scope="col">На мапі</th>
+      <th scope="col">Час роботи</th>
+      <th scope="col">Перейти</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let location of (locationList | async); let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ location.title }}</td>
+      <td>{{ location.primaryPhone }}</td>
+      <td>{{ location.additionalPhones }}</td>
+      <td>{{ location.administrativeArea }}</td>
+      <td>{{ location.postalCode }}</td>
+      <td>{{ location.locality }}</td>
+      <td>{{ location.addressLines }}</td>
+      <td><a href="{{ location.mapsUri }}">На мапі</a></td>
+      <td></td>
+      <td><a
+             routerLink="../{{ location.name }}"
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}"><button _ngcontent-wei-c1="" class="btn btn-primary" type="submit" >Перейти</button></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

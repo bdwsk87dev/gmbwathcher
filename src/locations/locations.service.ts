@@ -5,9 +5,8 @@ import { CreateLocationDto } from "./dto/create-location.dto";
 
 @Injectable()
 export class LocationsService{
-  constructor(@InjectModel(Location) private locationRepository: typeof Location) {
+  constructor(@InjectModel(Location) private locationRepository: typeof Location) {}
 
-  }
   async createLocation(dto: CreateLocationDto){
     const location = await this.locationRepository.create(dto);
     return location;
