@@ -2,6 +2,7 @@ import { Get, Injectable } from "@nestjs/common";
 import { LocationsService } from "../locations/locations.service";
 import { CreateLocationDto } from "../locations/dto/create-location.dto";
 import { ConfigModule } from '@nestjs/config';
+import { ChangesService } from "../changes/changes.service";
 
 const fs = require("fs");
 const { dirname } = require("path");
@@ -19,7 +20,7 @@ const scopes = [
 @Injectable()
 export class GmbService {
 
-  constructor(private locationService: LocationsService) {}
+  constructor(private locationService: LocationsService, private changeService: ChangesService) {}
 
   async startCron() {
     // Prepare credentials
@@ -94,8 +95,8 @@ export class GmbService {
     // Get locations
     const result = await mybusinessbusinessinformation.accounts.locations.list({
       parent: accountId,
-      readMask: "name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems",
-      pageSize: "2",
+      readMask: "name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems,regularHours",
+      pageSize: "10",
       key: apiKey
     });
 
@@ -105,35 +106,37 @@ export class GmbService {
       // Find this location in db
 
       let locationDto = {
-        "name": locations[key]["name"] ? locations[key]["name"] : "no name",
+        "name": locations[key]["name"] != "undefined" ? locations[key]["name"] : "no name",
         "gmbaccountId": 1,
-        "languageCode": locations[key]["languageCode"] ? locations[key]["languageCode"] : "no language code",
-        "storeCode": locations[key]["storeCode"] ? locations[key]["storeCode"] : "no store code",
-        "title": locations[key]["title"] ? locations[key]["title"] : "no title",
-        "primaryPhone": locations[key]["phoneNumbers"]["primaryPhone"] ? locations[key]["phoneNumbers"]["primaryPhone"] : "no primary phone",
-        "additionalPhones": locations[key]["phoneNumbers"]["additionalPhones"] ? locations[key]["phoneNumbers"]["additionalPhones"].join(",") : "no additional phones",
-        "regionCode": locations[key]["storefrontAddress"]["regionCode"] ? locations[key]["storefrontAddress"]["regionCode"] : "no region code",
-        "administrativeArea": locations[key]["storefrontAddress"]["administrativeArea"] ? locations[key]["storefrontAddress"]["administrativeArea"] : "no administrative area",
-        "postalCode": locations[key]["storefrontAddress"]["postalCode"] ? locations[key]["storefrontAddress"]["postalCode"] : "no postal code",
-        "locality": locations[key]["storefrontAddress"]["locality"] ? locations[key]["storefrontAddress"]["locality"] : "no locality",
-        "addressLines": locations[key]["storefrontAddress"]["addressLines"] ? locations[key]["storefrontAddress"]["addressLines"].join(",") : "no address lines",
-        "websiteUri": locations[key]["websiteUrl"] ? locations[key]["websiteUrl"] : "no website url",
-        "latlng": locations[key]["latlng"] ? JSON.stringify(locations[key]["latlng"]) : "no latlng",
-        "mapsUri": locations[key]["metadata"]["mapsUri"] ? locations[key]["metadata"]["mapsUri"] : "no maps uri"
-      };
+        "languageCode": locations[key]["languageCode"] != "undefined" ? locations[key]["languageCode"] : "no language code",
+        "storeCode": locations[key]["storeCode"] != "undefined" ? locations[key]["storeCode"] : "no store code",
+        "title": locations[key]["title"] != "undefined" ? locations[key]["title"] : "no title",
+        "primaryPhone": locations[key]["phoneNumbers"]["primaryPhone"] != "undefined" ? locations[key]["phoneNumbers"]["primaryPhone"] : "no primary phone",
+        "additionalPhones": locations[key]["phoneNumbers"]["additionalPhones"] != "undefined" ? locations[key]["phoneNumbers"]["additionalPhones"].join(",") : "no additional phones",
+        "regionCode": locations[key]["storefrontAddress"]["regionCode"] != "undefined" ? locations[key]["storefrontAddress"]["regionCode"] : "no region code",
+        "administrativeArea": locations[key]["storefrontAddress"]["administrativeArea"] != "undefined" ? locations[key]["storefrontAddress"]["administrativeArea"] : "no administrative area",
+        "postalCode": locations[key]["storefrontAddress"]["postalCode"] != "undefined" ? locations[key]["storefrontAddress"]["postalCode"] : "no postal code",
+        "locality": locations[key]["storefrontAddress"]["locality"] != "undefined" ? locations[key]["storefrontAddress"]["locality"] : "no locality",
+        "addressLines": locations[key]["storefrontAddress"]["addressLines"] != "undefined" ? locations[key]["storefrontAddress"]["addressLines"].join(",") : "no address lines",
+        "websiteUri": locations[key]["websiteUrl"] != "undefined" ? locations[key]["websiteUrl"] : "no website url",
+        "latlng": locations[key]["latlng"] != "undefined" ? JSON.stringify(locations[key]["latlng"]) : "no latlng",
+        "mapsUri": locations[key]["metadata"]["mapsUri"] != "undefined" ? locations[key]["metadata"]["mapsUri"] : "no maps uri",
+        "regularHours" : locations[key]["regularHours"]["periods"] != "undefined" ? JSON.stringify(locations[key]["regularHours"]["periods"]): "no regular hours"
+     };
 
       locationService.getLocationByName(locations[key]["name"]).then(location => {
           if (location === null) {
             let location = locationService.createLocation(locationDto);
           } else {
-            let location = locationService.getLocationByNameAndUpdate(locations[key]["name"], locationDto);
+            let updatedLocation = locationService.getLocationByNameAndUpdate(locations[key]["name"], locationDto);
+            console.log('LOCATION DTO')
+            console.log(locationDto);
+            console.log('OLD LOCATION')
+            console.log(location);
           }
-          console.log(location);
         }
       );
 
-      return true;
     }
   }
-
 }

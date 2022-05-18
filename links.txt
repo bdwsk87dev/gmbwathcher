@@ -1,4 +1,12 @@
 ng serve --open
+npm run start:dev
+
+https://developers.google.com/my-business/reference/businessinformation/rest/v1/accounts.locations/list
+
+https://developers.google.com/my-business/content/location-data#filter_results_when_you_list_locations
+
+###### Docker-compose build and deployment for Angular
+https://blog.adamzolo.com/docker-compose-build-and-deployment-for-angular/
 
 Get folders
 //const mybusinessaccountmanagement = google.mybusinessaccountmanagement('v1');

@@ -1,4 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class ChangesService {}
+export class ChangesService {
+
+  test(){
+  console.log('is tested');
+  }
+}
+
+
+
+

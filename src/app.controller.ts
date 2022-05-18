@@ -9,9 +9,8 @@ export class appController{
     constructor(private authService: AuthService) {}
 
     @Get()
-    @Render('index')
-    root() {
-        return { message: 'Сервер працює...' };
+    root(){
+        return 'server is running';
     }
 
     @UseGuards(LocalAuthGuard)

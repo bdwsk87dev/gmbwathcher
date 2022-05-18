@@ -8,7 +8,6 @@ export class UsersController {
 
   constructor(private usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post('/createuser')
   create(@Body() userDto: CreateUserDto){
     return this.usersService.createUser(userDto);

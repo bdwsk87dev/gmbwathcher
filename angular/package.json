@@ -2,6 +2,7 @@
   "name": "angular-authorization",
   "version": "0.0.0",
   "scripts": {
+    "start:docker": "ng serve --host 0.0.0.0",
     "start:client": "ng serve",
     "start:server": "node server/server.js",
     "build": "ng build",

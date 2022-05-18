@@ -27,18 +27,25 @@ services:
     environment:
       PG_DATA: /var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: always
 
   angular:
+    container_name: angular
+    image: production-image
     build:
-      context: .
+      context: ./angular
       dockerfile: angular.Dockerfile
-    command: sh -c "npm start"
+    command: sh -c "cd angular && npm run start:docker"
     ports:
-      - 4200:80
+      - "4200:4200"
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app
+      - node_modules:/home/node/app/node_modules
 
 volumes:
   pgdata:
+  node_modules:

@@ -5,10 +5,11 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { Location } from "../locations/locations.model";
 import { GmbService } from './gmb.service';
 import { ConfigModule } from "@nestjs/config";
+import { ChangesService } from "../changes/changes.service";
 
 @Module({
   controllers: [gmbController],
-  providers: [LocationsService, GmbService],
+  providers: [LocationsService, GmbService, ChangesService],
   imports: [
     SequelizeModule.forFeature([Location]),
     ConfigModule.forRoot({

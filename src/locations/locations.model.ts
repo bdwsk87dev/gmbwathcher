@@ -17,6 +17,7 @@ interface LocationCreationAttrs {
   websiteUri: string;
   latlng: string;
   mapsUri: string;
+  regularHours: string;
 }
 
 @Table({ tableName: "locations" })
@@ -53,6 +54,8 @@ export class Location extends Model<Location, LocationCreationAttrs> {
   latlng: string;
   @Column({type: DataType.STRING})
   mapsUri: string;
+  @Column({type: DataType.TEXT})
+  regularHours: string;
 
   @HasMany(()=>Change)
   changes: Change[]
