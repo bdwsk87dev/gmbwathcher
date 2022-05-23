@@ -95,7 +95,7 @@ export class GmbService {
     // Get locations
     const result = await mybusinessbusinessinformation.accounts.locations.list({
       parent: accountId,
-      readMask: "name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems,regularHours",
+      readMask: "name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems",
       pageSize: "10",
       key: apiKey
     });

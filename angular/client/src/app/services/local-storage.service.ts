@@ -14,7 +14,7 @@ export class LocalStorageService {
   getItem(key: string): any {
     try {
       const item = localStorage.getItem(key);
-
+      // const item = typeof window !== "undefined" ? JSON.parse(localStorage.getItem('key')): null || [];
       return JSON.parse(item);
     } catch (e) {
       return null;

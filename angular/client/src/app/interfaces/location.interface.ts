@@ -15,5 +15,5 @@ export interface Location {
   websiteUri: string;
   latlng: string;
   mapsUri: string;
-  worktime: string;
+  regularHours: string;
 }

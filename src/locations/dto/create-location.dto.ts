@@ -14,4 +14,5 @@ export class CreateLocationDto {
   readonly websiteUri: string;
   readonly latlng: string;
   readonly mapsUri: string;
+  readonly regularHours: string;
 }

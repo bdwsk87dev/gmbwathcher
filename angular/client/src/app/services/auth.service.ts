@@ -45,7 +45,10 @@ export class AuthService {
           return of(user);
         }
 
-        const token = this.localStorageService.getItem('token');
+       const token = this.localStorageService.getItem('token');
+
+      console.log(token);
+
         // if there is token then fetch the current user
         if (token) {
           return this.fetchCurrentUser();
