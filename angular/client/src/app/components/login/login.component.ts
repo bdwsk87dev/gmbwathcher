@@ -21,7 +21,9 @@ export class LoginComponent {
               private router: Router) { }
 
   login(): void {
+
     if (this.loginForm.valid) {
+    
       this.authService.login(this.form).subscribe(() => {
         this.router.navigateByUrl('/');
       }, err => {

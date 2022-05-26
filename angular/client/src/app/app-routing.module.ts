@@ -31,8 +31,6 @@ const routes: Routes = [{
     component: LocComponent,
     canActivate: [AuthGuard],
   }
-
-
 ];
 
 @NgModule({

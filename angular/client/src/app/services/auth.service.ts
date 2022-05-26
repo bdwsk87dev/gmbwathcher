@@ -9,7 +9,7 @@ import { User } from '../interfaces/user.interface';
 import { LocalStorageService } from './local-storage.service';
 
 interface LoginResponse {
-  accessToken: string;
+  access_token: string;
   user: User;
 }
 
@@ -23,11 +23,12 @@ export class AuthService {
               private localStorageService: LocalStorageService) { }
 
   login(form: {username: string; password: string}): Observable<LoginResponse> {
+
     return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, form)
       .pipe(
         tap(response => {
           this.user$.next(response.user);
-          this.setToken('token', response.accessToken);
+          this.setToken('token', response.access_token);
         })
       );
   }
@@ -69,6 +70,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<{accessToken: string; refreshToken: string}> {
+
     const refreshToken = this.localStorageService.getItem('refreshToken');
 
     return this.http.post<{accessToken: string; refreshToken: string}>(
