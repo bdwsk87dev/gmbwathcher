@@ -11,6 +11,20 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TokenInterceptor } from './services/token.interceptor';
 import {LocationComponent} from "./components/locations/location.component";
 import {LocComponent} from "./components/location/loc.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// import { MatNativeDateModule } from '@angular/material/core';
+// import { MatFormFieldModule } from "@angular/material/form-field";
+// import { MatDatepickerModule } from "@angular/material/datepicker";
+// import { MatInputModule } from '@angular/material/input';
+
+import {MaterialExampleModule} from './material.module';
+
+
+
+import { FlexLayoutModule } from "@angular/flex-layout";
+
+
 
 @NgModule({
   declarations: [
@@ -25,7 +39,14 @@ import {LocComponent} from "./components/location/loc.component";
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    // MatNativeDateModule,
+    // MatFormFieldModule,
+    // MatDatepickerModule,
+    // MatInputModule
+    MaterialExampleModule,
+    FlexLayoutModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

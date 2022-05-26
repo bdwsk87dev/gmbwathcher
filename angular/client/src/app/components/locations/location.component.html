@@ -1,49 +1,86 @@
 <div class="container mt-5">
 
-  <h3>Локації</h3>
+  <h2>Локації</h2>
 
-  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" style="margin-right:15px">
-  <!-- TODO -->
-  <label for="vehicle1">Тільки локації зі змінами</label><br>
+  <div
+    style="height: 100%; flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-around; align-items: center;">
 
-  <p>Згодом можливо буде обрати діапазон дат для виведення результатів (змін) які були зафіксовані протягом цього періоду</p>
 
-  <table class="table">
-    <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Назва</th>
-      <th scope="col">Основний телефон</th>
-      <th scope="col">Список додаткових телефонів</th>
-      <th scope="col">Область</th>
-      <th scope="col">Індекс</th>
-      <th scope="col">Місто</th>
-      <th scope="col">Адреса</th>
-      <th scope="col">Подивитись на мапі</th>
-      <th scope="col">К-сть зафіксованих змін</th>
-      <th scope="col">Перейти</th>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Введіть діапазон дат</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Дата початку">
+          <input matEndDate placeholder="Дата закінчення">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-checkbox class="example-margin">Тільки локації зі змінами</mat-checkbox>
+    </div>
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let location of (locationList | async); let i = index">
+  </div>
 
-      <th scope="row">{{ i + 1 }}</th>
-      <td>{{ location.title }}</td>
-      <td>{{ location.primaryPhone }}</td>
-      <td>{{ location.additionalPhones }}</td>
-      <td>{{ location.administrativeArea }}</td>
-      <td>{{ location.postalCode }}</td>
-      <td>{{ location.locality }}</td>
-      <td>{{ location.addressLines }}</td>
-      <td><a href="{{ location.mapsUri }}">На мапі</a></td>
-      <!-- TODO -->
-      <td style="color:red; text-align: center">2</td>
-      <td><a
-             routerLink="../{{ location.name }}"
-             routerLinkActive="active"
-             [routerLinkActiveOptions]="{exact: true}"><button _ngcontent-wei-c1="" class="btn btn-primary" type="submit" >Перейти</button></a></td>
-    </tr>
-    </tbody>
-  </table>
+  <br>
+
+  <mat-paginator [length]="100"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 aria-label="Select page">
+  </mat-paginator>
+
+
+  <div class="table-responsive">
+    <table class="table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+      <thead class="thead-dark">
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">#</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Назва</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Основний телефон</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Список додаткових телефонів</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Область</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Індекс</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Місто</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Адреса</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Подивитись на мапі</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">К-сть зафіксованих змін</th>
+        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Перейти</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let location of (locationList | async); let i = index">
+
+        <td class="mdl-data-table__cell--non-numeric" scope="row">{{ i + 1 }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ location.title }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ location.primaryPhone }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ location.additionalPhones }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ location.administrativeArea }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ location.postalCode }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ location.locality }}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{ location.addressLines }}</td>
+        <td class="mdl-data-table__cell--non-numeric text-center"><a target="_blank" href="{{ location.mapsUri }}">На мапі</a></td>
+        <!-- TODO -->
+        <td class="mdl-data-table__cell--non-numeric" style="color:red; text-align: center">2</td>
+        <td class="mdl-data-table__cell--non-numeric"><a
+          routerLink="../{{ location.name }}"
+          routerLinkActive="active"
+
+          [routerLinkActiveOptions]="{exact: true}">
+          <button _ngcontent-wei-c1="" class="btn btn-primary" type="submit">Перейти</button>
+        </a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <mat-paginator [length]="100"
+                 [pageSize]="10"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 aria-label="Select page">
+  </mat-paginator>
+
 </div>

@@ -17,6 +17,9 @@ export class LocationComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   locationList: Observable<Location[]>;
 
+  // dp
+  startDate = new Date(1990, 0, 1);
+
   constructor(private authService: AuthService,
               private locationService: LocationService) { }
 

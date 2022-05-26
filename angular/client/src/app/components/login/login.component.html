@@ -1,10 +1,10 @@
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-5 col-10">
-      <h2 class="mb-4">Please sign in</h2>
+      <h2 class="mb-4">Авторізація</h2>
       <form #loginForm="ngForm" (ngSubmit)="login()" (change)="resetError()">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="username">Логін</label>
           <input type="text"
                  class="form-control"
                  id="username"
@@ -19,8 +19,9 @@
               Username is required
           </small>
         </div>
+        <br>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Пароль</label>
           <input type="password"
                  class="form-control"
                  id="password"
@@ -36,7 +37,8 @@
           </small>
         </div>
         <p class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
-        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Submit</button>
+        <br>
+        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Увійти</button>
       </form>
     </div>
   </div>
