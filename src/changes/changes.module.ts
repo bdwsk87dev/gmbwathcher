@@ -5,9 +5,11 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { Change } from "./changes.model";
 import { Location } from "../locations/locations.model"
 
+
 @Module({
   controllers: [ChangesController],
   providers: [ChangesService],
+  exports: [ChangesService],
   imports:[
     SequelizeModule.forFeature([Change, Location])
   ]
