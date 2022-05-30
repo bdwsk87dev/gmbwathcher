@@ -1,8 +1,12 @@
 <div class="container mt-5">
-  <h3>Зміни які сталися щодо локаціі : </h3>
-
-  <p>Для прикладу на цій сторінці виводяться дві зміни статикою.</p>
-
+  <a routerLink="../../locations" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    Повернутись
+  </a>
+  <br><br>
+  <h2 *ngIf="location$">
+    {{ (location$ | async)?.title }} ( {{ (location$ | async)?.locality }} {{ (location$ | async)?.addressLines }})
+  </h2>
+  <p>Зміни які сталися щодо локаціі : </p>
   <table class="table">
     <thead class="thead-dark">
     <tr>

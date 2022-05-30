@@ -5,9 +5,11 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { LocService } from '../../services/loc.service';
 import { User } from '../../interfaces/user.interface';
+import { Location } from '../../interfaces/location.interface';
 
 import { ActivatedRoute } from '@angular/router';
 import { Change } from "../../interfaces/change.interface";
+import { LocationService } from "../../services/location.service";
 
 @Component({
   selector: 'app-profile',
@@ -19,9 +21,11 @@ export class LocComponent implements OnInit, OnDestroy {
   userSub: Subscription;
   changesList: Observable<Change[]>;
   locName: string;
+  location$: Observable<Location>;
 
   constructor(private authService: AuthService,
               private locService: LocService,
+              private locationService: LocationService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -29,6 +33,10 @@ export class LocComponent implements OnInit, OnDestroy {
       this.user = user;
       this.locName = this.route.snapshot.paramMap.get('name');
       this.changesList = this.locService.getChangesList(this.locName);
+
+      // Get location
+      this.location$ = this.locationService.getLocation(this.locName);
+
     });
   }
 

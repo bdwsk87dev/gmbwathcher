@@ -12,8 +12,10 @@ import { Change } from "../interfaces/change.interface";
 
 export class LocService {
   constructor(private http: HttpClient) { }
-  getChangesList(locName): Observable<Change[]> {
-    return this.http.get<Change[]>(`${environment.apiUrl}/changes/${locName}`, {});
+  getChangesList(name:string): Observable<Change[]> {
+    return this.http.get<Change[]>(`${environment.apiUrl}/changes/${name}`, {});
   }
+
+
 }
 

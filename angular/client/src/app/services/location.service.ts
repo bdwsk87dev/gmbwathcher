@@ -13,8 +13,10 @@ import { environment } from '../../environments/environment';
 export class LocationService {
   constructor(private http: HttpClient) { }
   getLocationList(): Observable<Location[]> {
-    console.log('getLocationList');
     return this.http.get<Location[]>(`${environment.apiUrl}/locations/list`, {});
+  }
+  getLocation(name:string): Observable<Location> {
+    return this.http.get<Location>(`${environment.apiUrl}/locations/${name}`, {});
   }
 }
 
