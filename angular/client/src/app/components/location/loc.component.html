@@ -21,7 +21,7 @@
 
     <tr *ngFor="let change of (changesList | async); let i = index">
       <th scope="row">{{ i + 1 }}</th>
-      <td></td>
+      <td>  {{  (location$ | async)?.createdAt | date:'MM.dd h:m'}} </td>
       <td [ngSwitch]="change.name">
         <p *ngSwitchCase="'languageCode'">Код мови</p>
         <p *ngSwitchCase="'storeCode'">Код магазину</p>

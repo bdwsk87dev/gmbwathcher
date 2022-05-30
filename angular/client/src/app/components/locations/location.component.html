@@ -64,7 +64,7 @@
         <td class="mdl-data-table__cell--non-numeric">{{ location.addressLines }}</td>
         <td class="mdl-data-table__cell--non-numeric text-center"><a target="_blank" href="{{ location.mapsUri }}">На мапі</a></td>
         <!-- TODO -->
-        <td class="mdl-data-table__cell--non-numeric" style="color:red; text-align: center">2</td>
+        <td class="mdl-data-table__cell--non-numeric" style="color:red; text-align: center">{{location.historyModelCount}}</td>
         <td class="mdl-data-table__cell--non-numeric"><a
           routerLink="../locations/{{ location.name }}"
           routerLinkActive="active"
