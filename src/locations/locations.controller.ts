@@ -8,8 +8,13 @@ export class LocationsController {
   getLocations(@Query() query: { pageSize: number, pageIndex:number }){
     return this.locationsService.getLocations(query.pageSize, query.pageIndex);
   }
+  @Get('count')
+  getCount(){
+    return this.locationsService.getCount();
+  }
   @Get(':name')
   getLocation(@Param('name') name){
     return this.locationsService.getLocationByName(name);
   }
+
 }

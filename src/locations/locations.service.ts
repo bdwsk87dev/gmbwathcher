@@ -18,25 +18,27 @@ export class LocationsService {
     return location;
   }
 
-  async getLocations(pageSize = 15, pageIndex = 1) {
+  async getLocations(pageSize = 15, pageIndex = 0) {
     const locations = await this.locationRepository.findAll(
       {
         attributes: {
           include: [[Sequelize.literal("COUNT(DISTINCT(changes.id))"), "historyModelCount"]]
-
         },
         include: [{
           model: Change, attributes: []
         }],
         group: ['Location.id'],
-        offset: ((pageIndex-1) * pageSize),
+        offset: ((pageIndex) * pageSize),
         limit: pageSize,
         subQuery:false
       }
     );
-    console.log(pageSize);
-    console.log(pageIndex);
     return locations;
+  }
+
+  async getCount(){
+    return await this.locationRepository.count({
+    });
   }
 
   async getLocationByName(name: string) {

@@ -15,11 +15,16 @@ export class LocationService {
   getLocationList(filter): Observable<Location[]> {
     // Prepare filter params
     let params = new HttpParams()
-      .set("pageSize",filter.pageSize)
+      .set("pageSize", filter.pageSize)
       .set("pageIndex", filter.pageIndex);
     // Send request
-    return this.http.get<Location[]>(`${environment.apiUrl}/locations/list`, {params});
+    return this.http.get<Location[]>(`${environment.apiUrl}/locations/list`, { params });
   }
+
+  getLocCount(): Observable<number>{
+    return this.http.get<number>(`${environment.apiUrl}/locations/count`);
+  }
+
   getLocation(name:string): Observable<Location> {
     return this.http.get<Location>(`${environment.apiUrl}/locations/${name}`, {});
   }

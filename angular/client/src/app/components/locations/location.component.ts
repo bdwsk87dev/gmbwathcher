@@ -17,26 +17,23 @@ export class LocationComponent implements OnInit, OnDestroy {
   user: User;
   userSub: Subscription;
   locationList: Observable<Location[]>;
+  locCount : Observable<number>;
 
   // date = new FormControl(new Date());
   // serializedDate = new FormControl(new Date().toISOString());
 
-  /*
-  Pagination
-  */
+  // Pagination
 
   // Total number of locations
   length = 100;
   // Show locations count per page
   pageSize = 15;
   // Current page
-  pageIndex = 1;
+  pageIndex = 0;
   // MatPaginator Output
   pageEvent: PageEvent;
 
-  /*
-  Constructor
-  */
+  // Constructor
 
   constructor(private authService: AuthService,
               private locationService: LocationService) {
@@ -52,13 +49,14 @@ export class LocationComponent implements OnInit, OnDestroy {
   getLocations(): void{
     this.userSub = this.authService.user$.subscribe((user: User) => {
       this.user = user;
-
       const filter = {
         'pageSize' : this.pageSize,
         'pageIndex' : this.pageIndex
       }
-
+      // TODO 2 запроса переделать в один
       this.locationList = this.locationService.getLocationList(filter);
+      this.locCount = this.locationService.getLocCount();
+      console.log(this.locCount);
     });
   }
 

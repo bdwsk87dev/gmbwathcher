@@ -26,7 +26,7 @@
 
   <br>
 
-  <mat-paginator [length]="length"
+  <mat-paginator [length]="locCount"
                  [pageSize]="pageSize"
                  [pageIndex]="pageIndex"
                  [pageSizeOptions]="[5, 10, 25, 100]"
@@ -78,7 +78,7 @@
     </table>
   </div>
 
-  <mat-paginator [length]="length"
+  <mat-paginator [length]="locCount | async"
                  [pageSize]="pageSize"
                  [pageIndex]="pageIndex"
                  [pageSizeOptions]="[5, 10, 25, 100]"
