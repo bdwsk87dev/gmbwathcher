@@ -26,12 +26,13 @@
 
   <br>
 
-  <mat-paginator [length]="100"
-                 [pageSize]="10"
+  <mat-paginator [length]="length"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
                  [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="handlePageEvent($event)"
                  aria-label="Select page">
   </mat-paginator>
-
 
   <div class="table-responsive">
     <table class="table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
@@ -77,9 +78,11 @@
     </table>
   </div>
 
-  <mat-paginator [length]="100"
-                 [pageSize]="10"
+  <mat-paginator [length]="length"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
                  [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="handlePageEvent($event)"
                  aria-label="Select page">
   </mat-paginator>
 

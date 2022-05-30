@@ -1,0 +1,1 @@
+{"ast":null,"code":"// export const environment = {\n//   production: false,\n//   apiUrl: 'http://localhost:5000'\n// };\nexport const environment = {\n  production: true,\n  apiUrl: 'http://185.233.118.150:5000'\n};","map":null,"metadata":{},"sourceType":"module"}

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -12,8 +12,13 @@ import { environment } from '../../environments/environment';
 
 export class LocationService {
   constructor(private http: HttpClient) { }
-  getLocationList(): Observable<Location[]> {
-    return this.http.get<Location[]>(`${environment.apiUrl}/locations/list`, {});
+  getLocationList(filter): Observable<Location[]> {
+    // Prepare filter params
+    let params = new HttpParams()
+      .set("pageSize",filter.pageSize)
+      .set("pageIndex", filter.pageIndex);
+    // Send request
+    return this.http.get<Location[]>(`${environment.apiUrl}/locations/list`, {params});
   }
   getLocation(name:string): Observable<Location> {
     return this.http.get<Location>(`${environment.apiUrl}/locations/${name}`, {});
