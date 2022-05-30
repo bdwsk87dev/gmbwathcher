@@ -18,11 +18,17 @@ export class LocationsService {
     return location;
   }
 
-  async getLocations(pageSize = 15, pageIndex = 0) {
+  async getLocations(
+    pageSize = 15,
+    pageIndex = 0,
+    orderField='count',
+    orderAsc='asc'
+  )
+  {
     const locations = await this.locationRepository.findAll(
       {
         attributes: {
-          include: [[Sequelize.literal("COUNT(DISTINCT(changes.id))"), "historyModelCount"]]
+          include: [[Sequelize.literal("COUNT(DISTINCT(changes.id))"), "count"]]
         },
         include: [{
           model: Change, attributes: []
@@ -30,6 +36,9 @@ export class LocationsService {
         group: ['Location.id'],
         offset: ((pageIndex) * pageSize),
         limit: pageSize,
+        order:[
+          [orderField,orderAsc]
+          ],
         subQuery:false
       }
     );

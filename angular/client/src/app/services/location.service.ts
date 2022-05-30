@@ -16,7 +16,10 @@ export class LocationService {
     // Prepare filter params
     let params = new HttpParams()
       .set("pageSize", filter.pageSize)
-      .set("pageIndex", filter.pageIndex);
+      .set("pageIndex", filter.pageIndex)
+      .set("orderField", filter.orderField)
+      .set("orderAsc", filter.orderAsc)
+
     // Send request
     return this.http.get<Location[]>(`${environment.apiUrl}/locations/list`, { params });
   }

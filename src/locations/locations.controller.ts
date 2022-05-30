@@ -5,8 +5,18 @@ import { LocationsService } from './locations.service';
 export class LocationsController {
   constructor(private locationsService: LocationsService) {}
   @Get('list')
-  getLocations(@Query() query: { pageSize: number, pageIndex:number }){
-    return this.locationsService.getLocations(query.pageSize, query.pageIndex);
+  getLocations(@Query() query: {
+    pageSize: number,
+    pageIndex:number,
+    orderField: string,
+    orderAsc:string
+  }){
+    return this.locationsService.getLocations(
+      query.pageSize,
+      query.pageIndex,
+      query.orderField,
+      query.orderAsc
+      );
   }
   @Get('count')
   getCount(){

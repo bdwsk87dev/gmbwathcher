@@ -23,7 +23,6 @@ export class LocationComponent implements OnInit, OnDestroy {
   // serializedDate = new FormControl(new Date().toISOString());
 
   // Pagination
-
   // Total number of locations
   length = 100;
   // Show locations count per page
@@ -33,7 +32,11 @@ export class LocationComponent implements OnInit, OnDestroy {
   // MatPaginator Output
   pageEvent: PageEvent;
 
-  // Constructor
+  // Order
+  // "Order by" Field
+  orderField = 'count';
+  // True is asc false is desc
+  orderAsc: boolean;
 
   constructor(private authService: AuthService,
               private locationService: LocationService) {
@@ -51,7 +54,9 @@ export class LocationComponent implements OnInit, OnDestroy {
       this.user = user;
       const filter = {
         'pageSize' : this.pageSize,
-        'pageIndex' : this.pageIndex
+        'pageIndex' : this.pageIndex,
+        'orderField': this.orderField,
+        'orderAsc': this.orderAsc == true? 'asc' : 'desc'
       }
       // TODO 2 запроса переделать в один
       this.locationList = this.locationService.getLocationList(filter);
@@ -74,6 +79,13 @@ export class LocationComponent implements OnInit, OnDestroy {
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
     // Update locations list
+    this.getLocations();
+  }
+
+  changeOrderField(field){
+    this.orderField = field;
+    this.orderAsc = !this.orderAsc;
+    this.pageIndex = 0;
     this.getLocations();
   }
 

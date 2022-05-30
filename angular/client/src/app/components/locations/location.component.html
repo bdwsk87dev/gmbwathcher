@@ -39,15 +39,15 @@
       <thead class="thead-dark">
       <tr>
         <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">#</th>
-        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Назва</th>
-        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Основний телефон</th>
+        <th (click)="changeOrderField('name')" class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Назва</th>
+        <th (click)="changeOrderField('primaryPhone')" class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Основний телефон</th>
         <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Список додаткових телефонів</th>
-        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Область</th>
-        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Індекс</th>
-        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Місто</th>
-        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Адреса</th>
+        <th (click)="changeOrderField('administrativeArea')" class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Область</th>
+        <th (click)="changeOrderField('postalCode')" class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Індекс</th>
+        <th (click)="changeOrderField('locality')" class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Місто</th>
+        <th (click)="changeOrderField('addressLines')" class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Адреса</th>
         <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Подивитись на мапі</th>
-        <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">К-сть зафіксованих змін</th>
+        <th (click)="changeOrderField('count')" class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">К-сть зафіксованих змін</th>
         <th class="mdl-data-table__cell--non-numeric align-middle text-center" scope="col">Перейти</th>
 
       </tr>
@@ -65,7 +65,7 @@
         <td class="mdl-data-table__cell--non-numeric">{{ location.addressLines }}</td>
         <td class="mdl-data-table__cell--non-numeric text-center"><a target="_blank" href="{{ location.mapsUri }}">На мапі</a></td>
         <!-- TODO -->
-        <td class="mdl-data-table__cell--non-numeric" style="color:red; text-align: center">{{location.historyModelCount}}</td>
+        <td class="mdl-data-table__cell--non-numeric" style="color:red; text-align: center">{{location.count}}</td>
         <td class="mdl-data-table__cell--non-numeric"><a
           routerLink="../locations/{{ location.name }}"
           routerLinkActive="active"
