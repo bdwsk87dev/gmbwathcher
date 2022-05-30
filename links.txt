@@ -1,3 +1,6 @@
+rem
+https://stackoverflow.com/questions/45997369/how-to-get-param-from-url-in-angular-4
+
 ng serve --open
 npm run start:dev
 

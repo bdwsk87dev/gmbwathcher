@@ -4,11 +4,11 @@ import { ChangesService } from './changes.service';
 import { SequelizeModule } from "@nestjs/sequelize";
 import { Change } from "./changes.model";
 import { Location } from "../locations/locations.model"
-
+import { LocationsService } from "../locations/locations.service";
 
 @Module({
   controllers: [ChangesController],
-  providers: [ChangesService],
+  providers: [ChangesService, LocationsService],
   exports: [ChangesService],
   imports:[
     SequelizeModule.forFeature([Change, Location])

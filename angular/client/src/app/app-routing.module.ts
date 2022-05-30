@@ -27,7 +27,7 @@ const routes: Routes = [{
     canActivate: [AuthGuard],
   },
   {
-    path: 'locations/:id',
+    path: 'locations/:name',
     component: LocComponent,
     canActivate: [AuthGuard],
   }

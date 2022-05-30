@@ -21,7 +21,7 @@ export class LocationComponent implements OnInit, OnDestroy {
   startDate = new Date(1990, 0, 1);
 
   constructor(private authService: AuthService,
-              private locationService: LocationService) { }
+              private locationService: LocationService) {}
 
   ngOnInit(): void {
     this.userSub = this.authService.user$.subscribe((user: User) => {

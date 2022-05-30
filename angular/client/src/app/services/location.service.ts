@@ -14,7 +14,7 @@ export class LocationService {
   constructor(private http: HttpClient) { }
   getLocationList(): Observable<Location[]> {
     console.log('getLocationList');
-    return this.http.post<Location[]>(`${environment.apiUrl}/locations/list`, {Authorization: 'ssss'});
+    return this.http.get<Location[]>(`${environment.apiUrl}/locations/list`, {});
   }
 }
 
