@@ -18,7 +18,21 @@
     <tr *ngFor="let change of (changesList | async); let i = index">
       <th scope="row">{{ i + 1 }}</th>
       <td></td>
-      <td></td>
+      <td [ngSwitch]="change.name">
+        <p *ngSwitchCase="'languageCode'">Код мови</p>
+        <p *ngSwitchCase="'storeCode'">Код магазину</p>
+        <p *ngSwitchCase="'title'">Назва</p>
+        <p *ngSwitchCase="'primaryPhone'">Телефон</p>
+        <p *ngSwitchCase="'additionalPhones'">Інші телефони</p>
+        <p *ngSwitchCase="'regionCode'">Код регіону</p>
+        <p *ngSwitchCase="'administrativeArea'">Область</p>
+        <p *ngSwitchCase="'postalCode'">Поштовий індекс</p>
+        <p *ngSwitchCase="'locality'">Місто</p>
+        <p *ngSwitchCase="'addressLines'">Адреса</p>
+        <p *ngSwitchCase="'websiteUri'">Веб-сайт</p>
+        <p *ngSwitchCase="'latlng'">Координати</p>
+        <p *ngSwitchCase="'mapsUri'">Посилання на карті</p>
+      </td>
       <td>{{change.value}}</td>
       <td>{{change.newVal}}</td>
     </tr>

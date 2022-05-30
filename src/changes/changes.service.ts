@@ -13,7 +13,7 @@ export class ChangesService {
     return change;
   }
   async getLocationChanges(name: string){
-    const location = await this.locationsService.getLocationByName("locations/"+name);
+    const location = await this.locationsService.getLocationByName(name);
     if(location === null) return null
     const changes = await this.changeRepository.findAll({
       where: {locationId:location.id},

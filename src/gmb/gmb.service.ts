@@ -107,7 +107,7 @@ export class GmbService {
     // console.log(locations);
     for (let key in locations) {
       let locationDto = {
-        "name": locations[key]["name"],
+        "name": locations[key]["name"].replace("locations/", ""),
         "gmbaccountId": 1, // TODO !!!
         "languageCode": locations[key]["languageCode"],
         "storeCode": locations[key]["storeCode"],
@@ -125,13 +125,14 @@ export class GmbService {
         "regularHours": locations[key]["regularHours"]["periods"] !== null ? JSON.stringify(locations[key]["regularHours"]["periods"]) : ""
       };
 
-      let location = await locationService.getLocationByName(locations[key]["name"]);
+      let location = await locationService.getLocationByName(locations[key]["name"].replace("locations/", ""));
       if (location === null) {
         let location = locationService.createLocation(locationDto);
       } else {
         let updatedLocation = locationService.getLocationByNameAndUpdate(locations[key]["name"], locationDto);
-        // Find changes
         for (let cKey in locationDto) {
+          if (cKey == "name" || cKey == "gmbaccountId") continue;
+          if (locationDto[cKey] === undefined) continue;
           console.log(locationDto[cKey] + " => " + location[cKey]);
           if (locationDto[cKey] != location[cKey]) {
             let newChange = {
