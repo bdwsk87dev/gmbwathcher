@@ -23,8 +23,14 @@ export class LocationsController {
       );
   }
   @Get('count')
-  getCount(){
-    return this.locationsService.getCount();
+  getCount(@Query() query: {
+    searchString:string,
+    onlyChanges:boolean
+  }){
+    return this.locationsService.getCount(
+      query.searchString,
+      query.onlyChanges
+    );
   }
   @Get(':name')
   getLocation(@Param('name') name){

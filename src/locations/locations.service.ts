@@ -73,8 +73,36 @@ export class LocationsService {
     return locations;
   }
 
-  async getCount(){
+  async getCount(searchString='', onlyChanged=false){
     return await this.locationRepository.count({
+      where:{
+        [Op.or]: [
+          {name:{
+              [Op.like]: '%'+searchString+'%'
+            }},
+          {title:{
+              [Op.like]: '%'+searchString+'%'
+            }},
+          {primaryPhone:{
+              [Op.like]: '%'+searchString+'%'
+            }},
+          {additionalPhones:{
+              [Op.like]: '%'+searchString+'%'
+            }},
+          {administrativeArea:{
+              [Op.like]: '%'+searchString+'%'
+            }},
+          {postalCode:{
+              [Op.like]: '%'+searchString+'%'
+            }},
+          {locality:{
+              [Op.like]: '%'+searchString+'%'
+            }},
+          {addressLines:{
+              [Op.like]: '%'+searchString+'%'
+            }}
+        ]
+      },
     });
   }
 
