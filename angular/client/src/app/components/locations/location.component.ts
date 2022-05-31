@@ -5,7 +5,6 @@ import { LocationService } from "../../services/location.service";
 import { User } from "../../interfaces/user.interface";
 import { Location } from "../../interfaces/location.interface";
 import { FormControl } from "@angular/forms";
-// Pagination
 import {PageEvent} from '@angular/material/paginator';
 
 @Component({
@@ -22,7 +21,9 @@ export class LocationComponent implements OnInit, OnDestroy {
   // date = new FormControl(new Date());
   // serializedDate = new FormControl(new Date().toISOString());
 
-  // Pagination
+  /*
+   * Pagination
+   */
   // Total number of locations
   length = 100;
   // Show locations count per page
@@ -32,11 +33,24 @@ export class LocationComponent implements OnInit, OnDestroy {
   // MatPaginator Output
   pageEvent: PageEvent;
 
-  // Order
+
+  /*
+   * Order by and asc / desc
+   */
+
   // "Order by" Field
   orderField = 'count';
   // True is asc false is desc
   orderAsc: boolean;
+
+  /*
+   * Other
+   */
+
+  // Input text for search
+  searchString = '';
+  // Display only locations with changes
+  onlyChanges = false;
 
   constructor(private authService: AuthService,
               private locationService: LocationService) {
@@ -50,18 +64,26 @@ export class LocationComponent implements OnInit, OnDestroy {
    * Get locations method from nest
    */
   getLocations(): void{
+
+    console.log(this.searchString);
+
     this.userSub = this.authService.user$.subscribe((user: User) => {
       this.user = user;
-      const filter = {
+
+      this.locationList = this.locationService.getLocationList({
         'pageSize' : this.pageSize,
         'pageIndex' : this.pageIndex,
         'orderField': this.orderField,
-        'orderAsc': this.orderAsc == true? 'asc' : 'desc'
-      }
-      // TODO 2 запроса переделать в один
-      this.locationList = this.locationService.getLocationList(filter);
-      this.locCount = this.locationService.getLocCount();
-      console.log(this.locCount);
+        'orderAsc': this.orderAsc == true? 'asc' : 'desc',
+        'searchString': this.searchString,
+        'onlyChanges': this.onlyChanges,
+      });
+
+      this.locCount = this.locationService.getLocCount({
+        'searchString': this.searchString,
+        'onlyChanges': this.onlyChanges
+      });
+
     });
   }
 
@@ -78,7 +100,6 @@ export class LocationComponent implements OnInit, OnDestroy {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    // Update locations list
     this.getLocations();
   }
 
@@ -86,6 +107,11 @@ export class LocationComponent implements OnInit, OnDestroy {
     this.orderField = field;
     this.orderAsc = !this.orderAsc;
     this.pageIndex = 0;
+    this.getLocations();
+  }
+
+  handleSearchEvent(event){
+    this.searchString = event.target.value;
     this.getLocations();
   }
 

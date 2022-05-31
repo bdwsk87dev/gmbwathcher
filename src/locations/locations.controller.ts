@@ -9,13 +9,17 @@ export class LocationsController {
     pageSize: number,
     pageIndex:number,
     orderField: string,
-    orderAsc:string
+    orderAsc:string,
+    searchString:string,
+    onlyChanges:boolean
   }){
     return this.locationsService.getLocations(
       query.pageSize,
       query.pageIndex,
       query.orderField,
-      query.orderAsc
+      query.orderAsc,
+      query.searchString,
+      query.onlyChanges
       );
   }
   @Get('count')

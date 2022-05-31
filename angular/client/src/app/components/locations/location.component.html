@@ -22,7 +22,7 @@
     <div style="margin-left:15px;">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Пошук</mat-label>
-        <input matInput placeholder="Текст для пошуку" value="">
+        <input (input)="handleSearchEvent($event)" matInput placeholder="Текст для пошуку" value="">
       </mat-form-field>
     </div>
 
