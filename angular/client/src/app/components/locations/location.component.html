@@ -3,22 +3,30 @@
   <h2>Локації</h2>
 
   <div
-    style="height: 100%; flex-direction: row; box-sizing: border-box; display: flex; place-content: center space-around; align-items: center;">
+    style="height: 100%; flex-direction:  row-gap: 10px; row; box-sizing: border-box; display: flex; place-content: left space-around; align-items: center;">
 
 
-    <div>
+    <div style="margin-left:15px;">
       <mat-form-field appearance="fill">
         <mat-label>Введіть діапазон дат</mat-label>
         <mat-date-range-input [rangePicker]="picker">
           <input matStartDate placeholder="Дата початку">
           <input matEndDate placeholder="Дата закінчення">
         </mat-date-range-input>
-        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <!-- <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>-->
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
     </div>
-    <div>
+
+    <div style="margin-left:15px;">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Пошук</mat-label>
+        <input matInput placeholder="Текст для пошуку" value="">
+      </mat-form-field>
+    </div>
+
+    <div style="margin-left:15px;">
       <mat-checkbox class="example-margin">Тільки локації зі змінами</mat-checkbox>
     </div>
 
@@ -26,7 +34,7 @@
 
   <br>
 
-  <mat-paginator [length]="locCount"
+  <mat-paginator [length]="locCount | async"
                  [pageSize]="pageSize"
                  [pageIndex]="pageIndex"
                  [pageSizeOptions]="[5, 10, 25, 100]"
