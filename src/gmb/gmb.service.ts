@@ -87,7 +87,6 @@ export class GmbService {
 
   async getLocations(oAuth2Client, locationService, changeService) {
 
-
     google.options({ auth: oAuth2Client });
     // Hardcode location ID
     let accountId = "accounts/112414412945354813426";
@@ -95,16 +94,41 @@ export class GmbService {
     const mybusinessbusinessinformation = google.mybusinessbusinessinformation("v1");
     // Get api key from env
     const apiKey = process.env.API_KEY;
-    // Get locations
-    const result = await mybusinessbusinessinformation.accounts.locations.list({
-      parent: accountId,
-      readMask: "name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems,regularHours",
-      pageSize: "2",
-      key: apiKey
-    });
 
-    let locations = result.data["locations"];
-    // console.log(locations);
+      // Get locations
+      let result = await mybusinessbusinessinformation.accounts.locations.list({
+        parent: accountId,
+        readMask: "name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems,regularHours",
+        pageSize: "100",
+        key: apiKey
+      });
+
+      let locations = result.data["locations"];
+
+      // Get next page token
+      let pageToken = result.data["nextPageToken"];
+        console.log('nextPageToken : ' + pageToken);
+        console.log('nextPageToken !== null');
+        console.log(pageToken !== null);
+
+      while(pageToken){
+        // Get locations
+        result = await mybusinessbusinessinformation.accounts.locations.list({
+          parent: accountId,
+          readMask: "name,languageCode,storeCode,title,phoneNumbers,categories,storefrontAddress,websiteUri,regularHours,specialHours,serviceArea,adWordsLocationExtensions,latlng,openInfo,metadata,profile,relationshipData,moreHours,serviceItems,regularHours",
+          pageSize: "100",
+          key: apiKey,
+          pageToken: pageToken
+        });
+        locations = locations.concat(result.data["locations"]);
+
+        // Get next page token
+        pageToken = result.data["nextPageToken"];
+        console.log('nextPageToken : ' + pageToken);
+        console.log('nextPageToken !== null');
+        console.log(pageToken !== null);
+      }
+
     for (let key in locations) {
       let locationDto = {
         "name": locations[key]["name"].replace("locations/", ""),
@@ -133,7 +157,7 @@ export class GmbService {
         for (let cKey in locationDto) {
           if (cKey == "name" || cKey == "gmbaccountId") continue;
           if (locationDto[cKey] === undefined) continue;
-          console.log(locationDto[cKey] + " => " + location[cKey]);
+          // console.log(locationDto[cKey] + " => " + location[cKey]);
           if (locationDto[cKey] != location[cKey]) {
             let newChange = {
               "locationId": location.id,
@@ -146,6 +170,7 @@ export class GmbService {
         }
       }
     }
+
   }
 }
 
