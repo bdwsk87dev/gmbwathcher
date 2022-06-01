@@ -50,8 +50,8 @@ export class LocationsService {
           ],
       },
         attributes: {
-          // include: [[Sequelize.literal("COUNT(DISTINCT(changes.id))"), "count"]],
-          include: [[Sequelize.literal("(CASE WHEN COUNT(DISTINCT(changes.id)) > 0 THEN COUNT(DISTINCT(changes.id)) ELSE NULL END)"),'count']]
+          include: [[Sequelize.literal("COUNT(DISTINCT(changes.id))"), "count"]],
+          // include: [[Sequelize.literal("(CASE WHEN COUNT(DISTINCT(changes.id)) > 0 THEN COUNT(DISTINCT(changes.id)) ELSE NULL END)"),'count']]
         },
         include: [{
           model: Change, attributes: [],
@@ -69,37 +69,13 @@ export class LocationsService {
     return locations;
   }
 
-  async getCount(searchString='', onlyChanged=false){
-    return await this.locationRepository.count({
-      where:{
-        [Op.or]: [
-          {name:{
-              [Op.like]: '%'+searchString+'%'
-            }},
-          {title:{
-              [Op.like]: '%'+searchString+'%'
-            }},
-          {primaryPhone:{
-              [Op.like]: '%'+searchString+'%'
-            }},
-          {additionalPhones:{
-              [Op.like]: '%'+searchString+'%'
-            }},
-          {administrativeArea:{
-              [Op.like]: '%'+searchString+'%'
-            }},
-          {postalCode:{
-              [Op.like]: '%'+searchString+'%'
-            }},
-          {locality:{
-              [Op.like]: '%'+searchString+'%'
-            }},
-          {addressLines:{
-              [Op.like]: '%'+searchString+'%'
-            }}
-        ]
-      },
-    });
+  async getCount(searchString='', onlyChanged){
+    let lng = this.getLocations(9999999, 0, 'count', 'asc', searchString, onlyChanged).then(location =>
+      {
+        return location.length;
+      }
+    );
+    return lng;
   }
 
   async getLocationByName(name: string) {
