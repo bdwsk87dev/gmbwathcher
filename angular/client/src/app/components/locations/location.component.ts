@@ -4,8 +4,8 @@ import { AuthService } from "../../services/auth.service";
 import { LocationService } from "../../services/location.service";
 import { User } from "../../interfaces/user.interface";
 import { Location } from "../../interfaces/location.interface";
-import { FormControl } from "@angular/forms";
-import {PageEvent} from '@angular/material/paginator';
+import { FormControl, FormGroup } from "@angular/forms";
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: "app-profile",
@@ -21,9 +21,6 @@ export class LocationComponent implements OnInit, OnDestroy {
   // date = new FormControl(new Date());
   // serializedDate = new FormControl(new Date().toISOString());
 
-  /*
-   * Pagination
-   */
   // Total number of locations
   length = 100;
   // Show locations count per page
@@ -33,24 +30,19 @@ export class LocationComponent implements OnInit, OnDestroy {
   // MatPaginator Output
   pageEvent: PageEvent;
 
-
-  /*
-   * Order by and asc / desc
-   */
-
   // "Order by" Field
   orderField = 'count';
   // True is asc false is desc
   orderAsc: boolean;
 
-  /*
-   * Other
-   */
-
   // Input text for search
   searchString = '';
   // Display only locations with changes
   onlyChanges = false;
+
+  // Date range picker
+  dateRangeStart : string;
+  dateRangeEnd: string;
 
   constructor(private authService: AuthService,
               private locationService: LocationService) {
@@ -74,11 +66,15 @@ export class LocationComponent implements OnInit, OnDestroy {
         'orderAsc': this.orderAsc == true? 'asc' : 'desc',
         'searchString': this.searchString,
         'onlyChanges': this.onlyChanges,
+        'dateRangeStart': this.dateRangeStart,
+        'dateRangeEnd':this.dateRangeEnd
       });
 
       this.locCount = this.locationService.getLocCount({
         'searchString': this.searchString,
-        'onlyChanges': this.onlyChanges
+        'onlyChanges': this.onlyChanges,
+        'dateRangeStart': this.dateRangeStart,
+        'dateRangeEnd':this.dateRangeEnd
       });
 
     });
@@ -117,5 +113,10 @@ export class LocationComponent implements OnInit, OnDestroy {
     this.getLocations();
   }
 
+  dateRangeChange(dateRangeStart,dateRangeEnd){
+    this.dateRangeStart = dateRangeStart.value;
+    this.dateRangeEnd = dateRangeEnd.value;
+    this.getLocations();
+  }
 }
 

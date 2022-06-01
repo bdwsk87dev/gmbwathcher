@@ -11,7 +11,10 @@ export class LocationsController {
     orderField: string,
     orderAsc:string,
     searchString:string,
-    onlyChanges:boolean
+    onlyChanges:boolean,
+    dateRangeStart:string,
+    dateRangeEnd:string
+
   }){
     return this.locationsService.getLocations(
       query.pageSize,
@@ -19,17 +22,23 @@ export class LocationsController {
       query.orderField,
       query.orderAsc,
       query.searchString,
-      query.onlyChanges
+      query.onlyChanges,
+      query.dateRangeStart,
+      query.dateRangeEnd
       );
   }
   @Get('count')
   getCount(@Query() query: {
     searchString:string,
-    onlyChanges:boolean
+    onlyChanges:boolean,
+    dateRangeStart:string,
+    dateRangeEnd:string
   }){
     return this.locationsService.getCount(
       query.searchString,
-      query.onlyChanges
+      query.onlyChanges,
+      query.dateRangeStart,
+      query.dateRangeEnd
     );
   }
   @Get(':name')

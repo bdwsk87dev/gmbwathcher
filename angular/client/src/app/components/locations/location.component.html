@@ -1,39 +1,31 @@
 <div class="container mt-5">
-
   <h2>Локації</h2>
-
-  <div
-    style="height: 100%; flex-direction:  row-gap: 10px; row; box-sizing: border-box; display: flex; place-content: left space-around; align-items: center;">
-
-
+  <div style="height: 100%; flex-direction:  row-gap: 10px; row; box-sizing: border-box; display: flex; place-content: left space-around; align-items: center;">
     <div style="margin-left:15px;">
       <mat-form-field appearance="fill">
         <mat-label>Введіть діапазон дат</mat-label>
         <mat-date-range-input [rangePicker]="picker">
-          <input matStartDate placeholder="Дата початку">
-          <input matEndDate placeholder="Дата закінчення">
+          <input matStartDate placeholder="Дата початку" #dateRangeStart>
+          <input matEndDate placeholder="Дата закінчення" #dateRangeEnd
+               (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)"
+          >
         </mat-date-range-input>
         <!-- <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>-->
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
     </div>
-
     <div style="margin-left:15px;">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Пошук</mat-label>
         <input (input)="handleSearchEvent($event)" matInput placeholder="Текст для пошуку" value="">
       </mat-form-field>
     </div>
-
     <div style="margin-left:15px;">
       <mat-checkbox (change)="onlyChangesToogle($event.checked)" class="example-margin">Тільки локації зі змінами</mat-checkbox>
     </div>
-
   </div>
-
   <br>
-
   <mat-paginator [length]="locCount | async"
                  [pageSize]="pageSize"
                  [pageIndex]="pageIndex"

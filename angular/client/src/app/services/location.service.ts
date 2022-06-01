@@ -21,6 +21,8 @@ export class LocationService {
       .set("orderAsc", filter.orderAsc)
       .set("searchString", filter.searchString)
       .set("onlyChanges", filter.onlyChanges)
+      .set("dateRangeStart", filter.dateRangeStart)
+      .set("dateRangeEnd", filter.dateRangeEnd)
 
     // Send request
     return this.http.get<Location[]>(`${environment.apiUrl}/locations/list`, { params });
@@ -31,6 +33,8 @@ export class LocationService {
     let params = new HttpParams()
       .set("searchString", countFilter.searchString)
       .set("onlyChanges", countFilter.onlyChanges)
+      .set("dateRangeStart", countFilter.dateRangeStart)
+      .set("dateRangeEnd", countFilter.dateRangeEnd)
 
     return this.http.get<number>(`${environment.apiUrl}/locations/count`, { params });
   }
