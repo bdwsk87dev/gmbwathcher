@@ -158,11 +158,11 @@ export class GmbService {
           if (cKey == "name" || cKey == "gmbaccountId") continue;
           if (locationDto[cKey] === undefined) continue;
           // console.log(locationDto[cKey] + " => " + location[cKey]);
-          if (locationDto[cKey] != location[cKey]) {
+          if (locationDto[cKey]+'+_old' != location[cKey]) {
             let newChange = {
               "locationId": location.id,
               "name": cKey,
-              "value": locationDto[cKey],
+              "value": locationDto[cKey]+'+_old',
               "newVal": location[cKey]
             };
             changeService.createChange(newChange);

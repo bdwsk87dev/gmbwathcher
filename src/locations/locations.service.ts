@@ -7,6 +7,7 @@ import { Sequelize, Op } from "sequelize"
 
 @Injectable()
 export class LocationsService {
+
   constructor(@InjectModel(Location) private locationRepository: typeof Location) {
   }
 
@@ -15,15 +16,9 @@ export class LocationsService {
     return location;
   }
 
-  async getLocations(
-    pageSize = 15,
-    pageIndex = 0,
-    orderField='count',
-    orderAsc='asc',
-    searchString='',
-    onlyChanged=false
-  )
+  async getLocations(pageSize = 15, pageIndex = 0, orderField='count', orderAsc='asc', searchString='', onlyChanged)
   {
+    onlyChanged = (onlyChanged.toLowerCase() === 'true');
     const locations = await this.locationRepository.findAll(
       {
         where:{
@@ -52,14 +47,15 @@ export class LocationsService {
             {addressLines:{
                 [Op.like]: '%'+searchString+'%'
               }}
-          ]
-        },
-
+          ],
+      },
         attributes: {
-          include: [[Sequelize.literal("COUNT(DISTINCT(changes.id))"), "count"]]
+          // include: [[Sequelize.literal("COUNT(DISTINCT(changes.id))"), "count"]],
+          include: [[Sequelize.literal("(CASE WHEN COUNT(DISTINCT(changes.id)) > 0 THEN COUNT(DISTINCT(changes.id)) ELSE NULL END)"),'count']]
         },
         include: [{
-          model: Change, attributes: []
+          model: Change, attributes: [],
+          required:onlyChanged
         }],
         group: ['Location.id'],
         offset: ((pageIndex) * pageSize),

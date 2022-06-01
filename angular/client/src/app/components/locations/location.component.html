@@ -27,7 +27,7 @@
     </div>
 
     <div style="margin-left:15px;">
-      <mat-checkbox class="example-margin">Тільки локації зі змінами</mat-checkbox>
+      <mat-checkbox (change)="onlyChangesToogle($event.checked)" class="example-margin">Тільки локації зі змінами</mat-checkbox>
     </div>
 
   </div>

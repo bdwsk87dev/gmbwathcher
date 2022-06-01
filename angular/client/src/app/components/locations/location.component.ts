@@ -64,9 +64,6 @@ export class LocationComponent implements OnInit, OnDestroy {
    * Get locations method from nest
    */
   getLocations(): void{
-
-    console.log(this.searchString);
-
     this.userSub = this.authService.user$.subscribe((user: User) => {
       this.user = user;
 
@@ -112,6 +109,11 @@ export class LocationComponent implements OnInit, OnDestroy {
 
   handleSearchEvent(event){
     this.searchString = event.target.value;
+    this.getLocations();
+  }
+
+  onlyChangesToogle(onlyChanges: boolean){
+    this.onlyChanges = onlyChanges;
     this.getLocations();
   }
 
